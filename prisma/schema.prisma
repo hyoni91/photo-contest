@@ -13,3 +13,56 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+model User {
+  id         Int       @id @default(autoincrement())
+  nickname   String
+  password   String
+  email      String    @unique
+  createdAt  DateTime  @default(now())
+  posts      Post[]
+  photos     Photo[]
+  likes      Like[]
+  comments   Comment[]
+}
+
+model Post {
+  id         Int       @id @default(autoincrement())
+  title      String
+  content    String
+  userId     Int
+  createdAt  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id])
+  photos     Photo[]
+  likes      Like[]
+  comments   Comment[]
+}
+
+model Photo {
+  id         Int       @id @default(autoincrement())
+  filename   String
+  postId     Int
+  userId     Int
+  uploadedAt DateTime  @default(now())
+  post       Post      @relation(fields: [postId], references: [id])
+  user       User      @relation(fields: [userId], references: [id])
+}
+
+model Like {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  postId     Int
+  likedAt    DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id])
+  post       Post      @relation(fields: [postId], references: [id])
+  @@unique([userId, postId]) // 중복 좋아요 방지
+}
+
+model Comment {
+  id         Int       @id @default(autoincrement())
+  content    String
+  postId     Int
+  userId     Int
+  createdAt  DateTime  @default(now())
+  post       Post      @relation(fields: [postId], references: [id])
+  user       User      @relation(fields: [userId], references: [id])
+}
