@@ -1,3 +1,5 @@
+"use client"
+
 import { joinForm } from "@/types/models/user";
 import React, { useState } from "react";
 
@@ -46,7 +48,7 @@ export default function JoinForm() {
 
     return(
         <div>
-
+            <h1>Join</h1>
         </div>
     )
     
