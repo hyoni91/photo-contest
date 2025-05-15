@@ -9,13 +9,12 @@ export default function JoinForm() {
         nickname: "",
         password: "",
         email: "",
-        createdAt: new Date()
     });
 
     const handleSubmit = async (e : React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         try{
-            const response = await fetch("/api/users", {
+            const response = await fetch("/api/join", {
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"
@@ -49,6 +48,21 @@ export default function JoinForm() {
     return(
         <div>
             <h1>Join</h1>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="nickname">Nickname</label>
+                    <input type="text" id="nickname" name="nickname" value={joinData.nickname} onChange={handleChange} required/>
+                </div>
+                <div>
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password" name="password" value={joinData.password} onChange={handleChange} required/>
+                </div>
+                <div>
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" name="email" value={joinData.email} onChange={handleChange} required/>
+                </div>
+                <button type="submit">Join</button>
+            </form>
         </div>
     )
     
