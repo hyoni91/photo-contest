@@ -4,6 +4,5 @@ export interface joinForm{
     nickname : string;
     password : string;
     email : string; //hash
-    createdAt : Date; //date(timestamp)
 }
 

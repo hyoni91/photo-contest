@@ -202,11 +202,12 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "mysql://hk.kim:mariadb@localhost:3306/photo"
+        "value": null
       }
     }
   },
