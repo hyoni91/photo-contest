@@ -19,6 +19,7 @@ model User {
   nickname  String
   password  String
   email     String    @unique
+  role      Role      @default(USER)
   createdAt DateTime  @default(now())
   posts     Post[]
   photos    Photo[]
@@ -26,13 +27,20 @@ model User {
   comments  Comment[]
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model Post {
   id        Int       @id @default(autoincrement())
   title     String
   content   String
   userId    Int
+  themeId   Int
   createdAt DateTime  @default(now())
   user      User      @relation(fields: [userId], references: [id])
+  theme     Theme     @relation(fields: [themeId], references: [id])
   photos    Photo[]
   likes     Like[]
   comments  Comment[]
@@ -67,4 +75,10 @@ model Comment {
   createdAt DateTime @default(now())
   post      Post     @relation(fields: [postId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Theme {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[]
 }

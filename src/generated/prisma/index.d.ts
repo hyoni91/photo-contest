@@ -38,6 +38,28 @@ export type Like = $Result.DefaultSelection<Prisma.$LikePayload>
  * 
  */
 export type Comment = $Result.DefaultSelection<Prisma.$CommentPayload>
+/**
+ * Model Theme
+ * 
+ */
+export type Theme = $Result.DefaultSelection<Prisma.$ThemePayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const Role: {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
+};
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+}
+
+export type Role = $Enums.Role
+
+export const Role: typeof $Enums.Role
 
 /**
  * ##  Prisma Client ʲˢ
@@ -213,6 +235,16 @@ export class PrismaClient<
     * ```
     */
   get comment(): Prisma.CommentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.theme`: Exposes CRUD operations for the **Theme** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Themes
+    * const themes = await prisma.theme.findMany()
+    * ```
+    */
+  get theme(): Prisma.ThemeDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -657,7 +689,8 @@ export namespace Prisma {
     Post: 'Post',
     Photo: 'Photo',
     Like: 'Like',
-    Comment: 'Comment'
+    Comment: 'Comment',
+    Theme: 'Theme'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -676,7 +709,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "post" | "photo" | "like" | "comment"
+      modelProps: "user" | "post" | "photo" | "like" | "comment" | "theme"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1010,6 +1043,72 @@ export namespace Prisma {
           }
         }
       }
+      Theme: {
+        payload: Prisma.$ThemePayload<ExtArgs>
+        fields: Prisma.ThemeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ThemeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ThemeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          findFirst: {
+            args: Prisma.ThemeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ThemeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          findMany: {
+            args: Prisma.ThemeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>[]
+          }
+          create: {
+            args: Prisma.ThemeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          createMany: {
+            args: Prisma.ThemeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ThemeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          update: {
+            args: Prisma.ThemeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          deleteMany: {
+            args: Prisma.ThemeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ThemeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ThemeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          aggregate: {
+            args: Prisma.ThemeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTheme>
+          }
+          groupBy: {
+            args: Prisma.ThemeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ThemeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ThemeCountArgs<ExtArgs>
+            result: $Utils.Optional<ThemeCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1099,6 +1198,7 @@ export namespace Prisma {
     photo?: PhotoOmit
     like?: LikeOmit
     comment?: CommentOmit
+    theme?: ThemeOmit
   }
 
   /* Types for Logging */
@@ -1296,6 +1396,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type ThemeCountOutputType
+   */
+
+  export type ThemeCountOutputType = {
+    posts: number
+  }
+
+  export type ThemeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    posts?: boolean | ThemeCountOutputTypeCountPostsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ThemeCountOutputType without action
+   */
+  export type ThemeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeCountOutputType
+     */
+    select?: ThemeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ThemeCountOutputType without action
+   */
+  export type ThemeCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PostWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -1324,6 +1455,7 @@ export namespace Prisma {
     nickname: string | null
     password: string | null
     email: string | null
+    role: $Enums.Role | null
     createdAt: Date | null
   }
 
@@ -1332,6 +1464,7 @@ export namespace Prisma {
     nickname: string | null
     password: string | null
     email: string | null
+    role: $Enums.Role | null
     createdAt: Date | null
   }
 
@@ -1340,6 +1473,7 @@ export namespace Prisma {
     nickname: number
     password: number
     email: number
+    role: number
     createdAt: number
     _all: number
   }
@@ -1358,6 +1492,7 @@ export namespace Prisma {
     nickname?: true
     password?: true
     email?: true
+    role?: true
     createdAt?: true
   }
 
@@ -1366,6 +1501,7 @@ export namespace Prisma {
     nickname?: true
     password?: true
     email?: true
+    role?: true
     createdAt?: true
   }
 
@@ -1374,6 +1510,7 @@ export namespace Prisma {
     nickname?: true
     password?: true
     email?: true
+    role?: true
     createdAt?: true
     _all?: true
   }
@@ -1469,6 +1606,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role: $Enums.Role
     createdAt: Date
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -1496,6 +1634,7 @@ export namespace Prisma {
     nickname?: boolean
     password?: boolean
     email?: boolean
+    role?: boolean
     createdAt?: boolean
     posts?: boolean | User$postsArgs<ExtArgs>
     photos?: boolean | User$photosArgs<ExtArgs>
@@ -1511,10 +1650,11 @@ export namespace Prisma {
     nickname?: boolean
     password?: boolean
     email?: boolean
+    role?: boolean
     createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nickname" | "password" | "email" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nickname" | "password" | "email" | "role" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | User$postsArgs<ExtArgs>
     photos?: boolean | User$photosArgs<ExtArgs>
@@ -1536,6 +1676,7 @@ export namespace Prisma {
       nickname: string
       password: string
       email: string
+      role: $Enums.Role
       createdAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1914,6 +2055,7 @@ export namespace Prisma {
     readonly nickname: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Role'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
   }
     
@@ -2387,11 +2529,13 @@ export namespace Prisma {
   export type PostAvgAggregateOutputType = {
     id: number | null
     userId: number | null
+    themeId: number | null
   }
 
   export type PostSumAggregateOutputType = {
     id: number | null
     userId: number | null
+    themeId: number | null
   }
 
   export type PostMinAggregateOutputType = {
@@ -2399,6 +2543,7 @@ export namespace Prisma {
     title: string | null
     content: string | null
     userId: number | null
+    themeId: number | null
     createdAt: Date | null
   }
 
@@ -2407,6 +2552,7 @@ export namespace Prisma {
     title: string | null
     content: string | null
     userId: number | null
+    themeId: number | null
     createdAt: Date | null
   }
 
@@ -2415,6 +2561,7 @@ export namespace Prisma {
     title: number
     content: number
     userId: number
+    themeId: number
     createdAt: number
     _all: number
   }
@@ -2423,11 +2570,13 @@ export namespace Prisma {
   export type PostAvgAggregateInputType = {
     id?: true
     userId?: true
+    themeId?: true
   }
 
   export type PostSumAggregateInputType = {
     id?: true
     userId?: true
+    themeId?: true
   }
 
   export type PostMinAggregateInputType = {
@@ -2435,6 +2584,7 @@ export namespace Prisma {
     title?: true
     content?: true
     userId?: true
+    themeId?: true
     createdAt?: true
   }
 
@@ -2443,6 +2593,7 @@ export namespace Prisma {
     title?: true
     content?: true
     userId?: true
+    themeId?: true
     createdAt?: true
   }
 
@@ -2451,6 +2602,7 @@ export namespace Prisma {
     title?: true
     content?: true
     userId?: true
+    themeId?: true
     createdAt?: true
     _all?: true
   }
@@ -2546,6 +2698,7 @@ export namespace Prisma {
     title: string
     content: string
     userId: number
+    themeId: number
     createdAt: Date
     _count: PostCountAggregateOutputType | null
     _avg: PostAvgAggregateOutputType | null
@@ -2573,8 +2726,10 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     userId?: boolean
+    themeId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    theme?: boolean | ThemeDefaultArgs<ExtArgs>
     photos?: boolean | Post$photosArgs<ExtArgs>
     likes?: boolean | Post$likesArgs<ExtArgs>
     comments?: boolean | Post$commentsArgs<ExtArgs>
@@ -2588,12 +2743,14 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     userId?: boolean
+    themeId?: boolean
     createdAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "userId" | "createdAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "userId" | "themeId" | "createdAt", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    theme?: boolean | ThemeDefaultArgs<ExtArgs>
     photos?: boolean | Post$photosArgs<ExtArgs>
     likes?: boolean | Post$likesArgs<ExtArgs>
     comments?: boolean | Post$commentsArgs<ExtArgs>
@@ -2604,6 +2761,7 @@ export namespace Prisma {
     name: "Post"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      theme: Prisma.$ThemePayload<ExtArgs>
       photos: Prisma.$PhotoPayload<ExtArgs>[]
       likes: Prisma.$LikePayload<ExtArgs>[]
       comments: Prisma.$CommentPayload<ExtArgs>[]
@@ -2613,6 +2771,7 @@ export namespace Prisma {
       title: string
       content: string
       userId: number
+      themeId: number
       createdAt: Date
     }, ExtArgs["result"]["post"]>
     composites: {}
@@ -2955,6 +3114,7 @@ export namespace Prisma {
   export interface Prisma__PostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    theme<T extends ThemeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ThemeDefaultArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     photos<T extends Post$photosArgs<ExtArgs> = {}>(args?: Subset<T, Post$photosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     likes<T extends Post$likesArgs<ExtArgs> = {}>(args?: Subset<T, Post$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends Post$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Post$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2991,6 +3151,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
     readonly userId: FieldRef<"Post", 'Int'>
+    readonly themeId: FieldRef<"Post", 'Int'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
   }
     
@@ -6340,6 +6501,962 @@ export namespace Prisma {
 
 
   /**
+   * Model Theme
+   */
+
+  export type AggregateTheme = {
+    _count: ThemeCountAggregateOutputType | null
+    _avg: ThemeAvgAggregateOutputType | null
+    _sum: ThemeSumAggregateOutputType | null
+    _min: ThemeMinAggregateOutputType | null
+    _max: ThemeMaxAggregateOutputType | null
+  }
+
+  export type ThemeAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ThemeSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ThemeMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type ThemeMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type ThemeCountAggregateOutputType = {
+    id: number
+    name: number
+    _all: number
+  }
+
+
+  export type ThemeAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type ThemeSumAggregateInputType = {
+    id?: true
+  }
+
+  export type ThemeMinAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type ThemeMaxAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type ThemeCountAggregateInputType = {
+    id?: true
+    name?: true
+    _all?: true
+  }
+
+  export type ThemeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Theme to aggregate.
+     */
+    where?: ThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Themes to fetch.
+     */
+    orderBy?: ThemeOrderByWithRelationInput | ThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Themes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Themes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Themes
+    **/
+    _count?: true | ThemeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ThemeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ThemeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ThemeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ThemeMaxAggregateInputType
+  }
+
+  export type GetThemeAggregateType<T extends ThemeAggregateArgs> = {
+        [P in keyof T & keyof AggregateTheme]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTheme[P]>
+      : GetScalarType<T[P], AggregateTheme[P]>
+  }
+
+
+
+
+  export type ThemeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ThemeWhereInput
+    orderBy?: ThemeOrderByWithAggregationInput | ThemeOrderByWithAggregationInput[]
+    by: ThemeScalarFieldEnum[] | ThemeScalarFieldEnum
+    having?: ThemeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ThemeCountAggregateInputType | true
+    _avg?: ThemeAvgAggregateInputType
+    _sum?: ThemeSumAggregateInputType
+    _min?: ThemeMinAggregateInputType
+    _max?: ThemeMaxAggregateInputType
+  }
+
+  export type ThemeGroupByOutputType = {
+    id: number
+    name: string
+    _count: ThemeCountAggregateOutputType | null
+    _avg: ThemeAvgAggregateOutputType | null
+    _sum: ThemeSumAggregateOutputType | null
+    _min: ThemeMinAggregateOutputType | null
+    _max: ThemeMaxAggregateOutputType | null
+  }
+
+  type GetThemeGroupByPayload<T extends ThemeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ThemeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ThemeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ThemeGroupByOutputType[P]>
+            : GetScalarType<T[P], ThemeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ThemeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    posts?: boolean | Theme$postsArgs<ExtArgs>
+    _count?: boolean | ThemeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["theme"]>
+
+
+
+  export type ThemeSelectScalar = {
+    id?: boolean
+    name?: boolean
+  }
+
+  export type ThemeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["theme"]>
+  export type ThemeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    posts?: boolean | Theme$postsArgs<ExtArgs>
+    _count?: boolean | ThemeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ThemePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Theme"
+    objects: {
+      posts: Prisma.$PostPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+    }, ExtArgs["result"]["theme"]>
+    composites: {}
+  }
+
+  type ThemeGetPayload<S extends boolean | null | undefined | ThemeDefaultArgs> = $Result.GetResult<Prisma.$ThemePayload, S>
+
+  type ThemeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ThemeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ThemeCountAggregateInputType | true
+    }
+
+  export interface ThemeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Theme'], meta: { name: 'Theme' } }
+    /**
+     * Find zero or one Theme that matches the filter.
+     * @param {ThemeFindUniqueArgs} args - Arguments to find a Theme
+     * @example
+     * // Get one Theme
+     * const theme = await prisma.theme.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ThemeFindUniqueArgs>(args: SelectSubset<T, ThemeFindUniqueArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Theme that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ThemeFindUniqueOrThrowArgs} args - Arguments to find a Theme
+     * @example
+     * // Get one Theme
+     * const theme = await prisma.theme.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ThemeFindUniqueOrThrowArgs>(args: SelectSubset<T, ThemeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Theme that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeFindFirstArgs} args - Arguments to find a Theme
+     * @example
+     * // Get one Theme
+     * const theme = await prisma.theme.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ThemeFindFirstArgs>(args?: SelectSubset<T, ThemeFindFirstArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Theme that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeFindFirstOrThrowArgs} args - Arguments to find a Theme
+     * @example
+     * // Get one Theme
+     * const theme = await prisma.theme.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ThemeFindFirstOrThrowArgs>(args?: SelectSubset<T, ThemeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Themes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Themes
+     * const themes = await prisma.theme.findMany()
+     * 
+     * // Get first 10 Themes
+     * const themes = await prisma.theme.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const themeWithIdOnly = await prisma.theme.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ThemeFindManyArgs>(args?: SelectSubset<T, ThemeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Theme.
+     * @param {ThemeCreateArgs} args - Arguments to create a Theme.
+     * @example
+     * // Create one Theme
+     * const Theme = await prisma.theme.create({
+     *   data: {
+     *     // ... data to create a Theme
+     *   }
+     * })
+     * 
+     */
+    create<T extends ThemeCreateArgs>(args: SelectSubset<T, ThemeCreateArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Themes.
+     * @param {ThemeCreateManyArgs} args - Arguments to create many Themes.
+     * @example
+     * // Create many Themes
+     * const theme = await prisma.theme.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ThemeCreateManyArgs>(args?: SelectSubset<T, ThemeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Theme.
+     * @param {ThemeDeleteArgs} args - Arguments to delete one Theme.
+     * @example
+     * // Delete one Theme
+     * const Theme = await prisma.theme.delete({
+     *   where: {
+     *     // ... filter to delete one Theme
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ThemeDeleteArgs>(args: SelectSubset<T, ThemeDeleteArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Theme.
+     * @param {ThemeUpdateArgs} args - Arguments to update one Theme.
+     * @example
+     * // Update one Theme
+     * const theme = await prisma.theme.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ThemeUpdateArgs>(args: SelectSubset<T, ThemeUpdateArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Themes.
+     * @param {ThemeDeleteManyArgs} args - Arguments to filter Themes to delete.
+     * @example
+     * // Delete a few Themes
+     * const { count } = await prisma.theme.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ThemeDeleteManyArgs>(args?: SelectSubset<T, ThemeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Themes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Themes
+     * const theme = await prisma.theme.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ThemeUpdateManyArgs>(args: SelectSubset<T, ThemeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Theme.
+     * @param {ThemeUpsertArgs} args - Arguments to update or create a Theme.
+     * @example
+     * // Update or create a Theme
+     * const theme = await prisma.theme.upsert({
+     *   create: {
+     *     // ... data to create a Theme
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Theme we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ThemeUpsertArgs>(args: SelectSubset<T, ThemeUpsertArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Themes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeCountArgs} args - Arguments to filter Themes to count.
+     * @example
+     * // Count the number of Themes
+     * const count = await prisma.theme.count({
+     *   where: {
+     *     // ... the filter for the Themes we want to count
+     *   }
+     * })
+    **/
+    count<T extends ThemeCountArgs>(
+      args?: Subset<T, ThemeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ThemeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Theme.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ThemeAggregateArgs>(args: Subset<T, ThemeAggregateArgs>): Prisma.PrismaPromise<GetThemeAggregateType<T>>
+
+    /**
+     * Group by Theme.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ThemeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ThemeGroupByArgs['orderBy'] }
+        : { orderBy?: ThemeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ThemeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetThemeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Theme model
+   */
+  readonly fields: ThemeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Theme.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ThemeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    posts<T extends Theme$postsArgs<ExtArgs> = {}>(args?: Subset<T, Theme$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Theme model
+   */
+  interface ThemeFieldRefs {
+    readonly id: FieldRef<"Theme", 'Int'>
+    readonly name: FieldRef<"Theme", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Theme findUnique
+   */
+  export type ThemeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which Theme to fetch.
+     */
+    where: ThemeWhereUniqueInput
+  }
+
+  /**
+   * Theme findUniqueOrThrow
+   */
+  export type ThemeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which Theme to fetch.
+     */
+    where: ThemeWhereUniqueInput
+  }
+
+  /**
+   * Theme findFirst
+   */
+  export type ThemeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which Theme to fetch.
+     */
+    where?: ThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Themes to fetch.
+     */
+    orderBy?: ThemeOrderByWithRelationInput | ThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Themes.
+     */
+    cursor?: ThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Themes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Themes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Themes.
+     */
+    distinct?: ThemeScalarFieldEnum | ThemeScalarFieldEnum[]
+  }
+
+  /**
+   * Theme findFirstOrThrow
+   */
+  export type ThemeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which Theme to fetch.
+     */
+    where?: ThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Themes to fetch.
+     */
+    orderBy?: ThemeOrderByWithRelationInput | ThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Themes.
+     */
+    cursor?: ThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Themes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Themes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Themes.
+     */
+    distinct?: ThemeScalarFieldEnum | ThemeScalarFieldEnum[]
+  }
+
+  /**
+   * Theme findMany
+   */
+  export type ThemeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which Themes to fetch.
+     */
+    where?: ThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Themes to fetch.
+     */
+    orderBy?: ThemeOrderByWithRelationInput | ThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Themes.
+     */
+    cursor?: ThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Themes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Themes.
+     */
+    skip?: number
+    distinct?: ThemeScalarFieldEnum | ThemeScalarFieldEnum[]
+  }
+
+  /**
+   * Theme create
+   */
+  export type ThemeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Theme.
+     */
+    data: XOR<ThemeCreateInput, ThemeUncheckedCreateInput>
+  }
+
+  /**
+   * Theme createMany
+   */
+  export type ThemeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Themes.
+     */
+    data: ThemeCreateManyInput | ThemeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Theme update
+   */
+  export type ThemeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Theme.
+     */
+    data: XOR<ThemeUpdateInput, ThemeUncheckedUpdateInput>
+    /**
+     * Choose, which Theme to update.
+     */
+    where: ThemeWhereUniqueInput
+  }
+
+  /**
+   * Theme updateMany
+   */
+  export type ThemeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Themes.
+     */
+    data: XOR<ThemeUpdateManyMutationInput, ThemeUncheckedUpdateManyInput>
+    /**
+     * Filter which Themes to update
+     */
+    where?: ThemeWhereInput
+    /**
+     * Limit how many Themes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Theme upsert
+   */
+  export type ThemeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Theme to update in case it exists.
+     */
+    where: ThemeWhereUniqueInput
+    /**
+     * In case the Theme found by the `where` argument doesn't exist, create a new Theme with this data.
+     */
+    create: XOR<ThemeCreateInput, ThemeUncheckedCreateInput>
+    /**
+     * In case the Theme was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ThemeUpdateInput, ThemeUncheckedUpdateInput>
+  }
+
+  /**
+   * Theme delete
+   */
+  export type ThemeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter which Theme to delete.
+     */
+    where: ThemeWhereUniqueInput
+  }
+
+  /**
+   * Theme deleteMany
+   */
+  export type ThemeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Themes to delete
+     */
+    where?: ThemeWhereInput
+    /**
+     * Limit how many Themes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Theme.posts
+   */
+  export type Theme$postsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Post
+     */
+    select?: PostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Post
+     */
+    omit?: PostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    where?: PostWhereInput
+    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
+    cursor?: PostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
+  }
+
+  /**
+   * Theme without action
+   */
+  export type ThemeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -6358,6 +7475,7 @@ export namespace Prisma {
     nickname: 'nickname',
     password: 'password',
     email: 'email',
+    role: 'role',
     createdAt: 'createdAt'
   };
 
@@ -6369,6 +7487,7 @@ export namespace Prisma {
     title: 'title',
     content: 'content',
     userId: 'userId',
+    themeId: 'themeId',
     createdAt: 'createdAt'
   };
 
@@ -6405,6 +7524,14 @@ export namespace Prisma {
   };
 
   export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
+  export const ThemeScalarFieldEnum: {
+    id: 'id',
+    name: 'name'
+  };
+
+  export type ThemeScalarFieldEnum = (typeof ThemeScalarFieldEnum)[keyof typeof ThemeScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -6446,6 +7573,13 @@ export namespace Prisma {
   export type CommentOrderByRelevanceFieldEnum = (typeof CommentOrderByRelevanceFieldEnum)[keyof typeof CommentOrderByRelevanceFieldEnum]
 
 
+  export const ThemeOrderByRelevanceFieldEnum: {
+    name: 'name'
+  };
+
+  export type ThemeOrderByRelevanceFieldEnum = (typeof ThemeOrderByRelevanceFieldEnum)[keyof typeof ThemeOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -6462,6 +7596,13 @@ export namespace Prisma {
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'Role'
+   */
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
     
 
 
@@ -6490,6 +7631,7 @@ export namespace Prisma {
     nickname?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     posts?: PostListRelationFilter
     photos?: PhotoListRelationFilter
@@ -6502,6 +7644,7 @@ export namespace Prisma {
     nickname?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     posts?: PostOrderByRelationAggregateInput
     photos?: PhotoOrderByRelationAggregateInput
@@ -6518,6 +7661,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     nickname?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     posts?: PostListRelationFilter
     photos?: PhotoListRelationFilter
@@ -6530,6 +7674,7 @@ export namespace Prisma {
     nickname?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -6546,6 +7691,7 @@ export namespace Prisma {
     nickname?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
+    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -6557,8 +7703,10 @@ export namespace Prisma {
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
     userId?: IntFilter<"Post"> | number
+    themeId?: IntFilter<"Post"> | number
     createdAt?: DateTimeFilter<"Post"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    theme?: XOR<ThemeScalarRelationFilter, ThemeWhereInput>
     photos?: PhotoListRelationFilter
     likes?: LikeListRelationFilter
     comments?: CommentListRelationFilter
@@ -6569,8 +7717,10 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     userId?: SortOrder
+    themeId?: SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
+    theme?: ThemeOrderByWithRelationInput
     photos?: PhotoOrderByRelationAggregateInput
     likes?: LikeOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
@@ -6585,8 +7735,10 @@ export namespace Prisma {
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
     userId?: IntFilter<"Post"> | number
+    themeId?: IntFilter<"Post"> | number
     createdAt?: DateTimeFilter<"Post"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    theme?: XOR<ThemeScalarRelationFilter, ThemeWhereInput>
     photos?: PhotoListRelationFilter
     likes?: LikeListRelationFilter
     comments?: CommentListRelationFilter
@@ -6597,6 +7749,7 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     userId?: SortOrder
+    themeId?: SortOrder
     createdAt?: SortOrder
     _count?: PostCountOrderByAggregateInput
     _avg?: PostAvgOrderByAggregateInput
@@ -6613,6 +7766,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Post"> | string
     content?: StringWithAggregatesFilter<"Post"> | string
     userId?: IntWithAggregatesFilter<"Post"> | number
+    themeId?: IntWithAggregatesFilter<"Post"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
   }
 
@@ -6794,10 +7948,54 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
   }
 
+  export type ThemeWhereInput = {
+    AND?: ThemeWhereInput | ThemeWhereInput[]
+    OR?: ThemeWhereInput[]
+    NOT?: ThemeWhereInput | ThemeWhereInput[]
+    id?: IntFilter<"Theme"> | number
+    name?: StringFilter<"Theme"> | string
+    posts?: PostListRelationFilter
+  }
+
+  export type ThemeOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    posts?: PostOrderByRelationAggregateInput
+    _relevance?: ThemeOrderByRelevanceInput
+  }
+
+  export type ThemeWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    AND?: ThemeWhereInput | ThemeWhereInput[]
+    OR?: ThemeWhereInput[]
+    NOT?: ThemeWhereInput | ThemeWhereInput[]
+    posts?: PostListRelationFilter
+  }, "id" | "name">
+
+  export type ThemeOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    _count?: ThemeCountOrderByAggregateInput
+    _avg?: ThemeAvgOrderByAggregateInput
+    _max?: ThemeMaxOrderByAggregateInput
+    _min?: ThemeMinOrderByAggregateInput
+    _sum?: ThemeSumOrderByAggregateInput
+  }
+
+  export type ThemeScalarWhereWithAggregatesInput = {
+    AND?: ThemeScalarWhereWithAggregatesInput | ThemeScalarWhereWithAggregatesInput[]
+    OR?: ThemeScalarWhereWithAggregatesInput[]
+    NOT?: ThemeScalarWhereWithAggregatesInput | ThemeScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Theme"> | number
+    name?: StringWithAggregatesFilter<"Theme"> | string
+  }
+
   export type UserCreateInput = {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     photos?: PhotoCreateNestedManyWithoutUserInput
@@ -6810,6 +8008,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     photos?: PhotoUncheckedCreateNestedManyWithoutUserInput
@@ -6821,6 +8020,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     photos?: PhotoUpdateManyWithoutUserNestedInput
@@ -6833,6 +8033,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     photos?: PhotoUncheckedUpdateManyWithoutUserNestedInput
@@ -6845,6 +8046,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
   }
 
@@ -6852,6 +8054,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6860,6 +8063,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6868,6 +8072,7 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutPostsInput
+    theme: ThemeCreateNestedOneWithoutPostsInput
     photos?: PhotoCreateNestedManyWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
     comments?: CommentCreateNestedManyWithoutPostInput
@@ -6878,6 +8083,7 @@ export namespace Prisma {
     title: string
     content: string
     userId: number
+    themeId: number
     createdAt?: Date | string
     photos?: PhotoUncheckedCreateNestedManyWithoutPostInput
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
@@ -6889,6 +8095,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    theme?: ThemeUpdateOneRequiredWithoutPostsNestedInput
     photos?: PhotoUpdateManyWithoutPostNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
     comments?: CommentUpdateManyWithoutPostNestedInput
@@ -6899,6 +8106,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    themeId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     photos?: PhotoUncheckedUpdateManyWithoutPostNestedInput
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
@@ -6910,6 +8118,7 @@ export namespace Prisma {
     title: string
     content: string
     userId: number
+    themeId: number
     createdAt?: Date | string
   }
 
@@ -6924,6 +8133,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    themeId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7073,6 +8283,42 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ThemeCreateInput = {
+    name: string
+    posts?: PostCreateNestedManyWithoutThemeInput
+  }
+
+  export type ThemeUncheckedCreateInput = {
+    id?: number
+    name: string
+    posts?: PostUncheckedCreateNestedManyWithoutThemeInput
+  }
+
+  export type ThemeUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    posts?: PostUpdateManyWithoutThemeNestedInput
+  }
+
+  export type ThemeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    posts?: PostUncheckedUpdateManyWithoutThemeNestedInput
+  }
+
+  export type ThemeCreateManyInput = {
+    id?: number
+    name: string
+  }
+
+  export type ThemeUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ThemeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -7097,6 +8343,13 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     search?: string
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -7161,6 +8414,7 @@ export namespace Prisma {
     nickname?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7173,6 +8427,7 @@ export namespace Prisma {
     nickname?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7181,6 +8436,7 @@ export namespace Prisma {
     nickname?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7222,6 +8478,16 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -7241,6 +8507,11 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
+  export type ThemeScalarRelationFilter = {
+    is?: ThemeWhereInput
+    isNot?: ThemeWhereInput
+  }
+
   export type PostOrderByRelevanceInput = {
     fields: PostOrderByRelevanceFieldEnum | PostOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -7252,12 +8523,14 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     userId?: SortOrder
+    themeId?: SortOrder
     createdAt?: SortOrder
   }
 
   export type PostAvgOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    themeId?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
@@ -7265,6 +8538,7 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     userId?: SortOrder
+    themeId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7273,12 +8547,14 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     userId?: SortOrder
+    themeId?: SortOrder
     createdAt?: SortOrder
   }
 
   export type PostSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    themeId?: SortOrder
   }
 
   export type PostScalarRelationFilter = {
@@ -7408,6 +8684,35 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type ThemeOrderByRelevanceInput = {
+    fields: ThemeOrderByRelevanceFieldEnum | ThemeOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ThemeCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type ThemeAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ThemeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type ThemeMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type ThemeSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
   export type PostCreateNestedManyWithoutUserInput = {
     create?: XOR<PostCreateWithoutUserInput, PostUncheckedCreateWithoutUserInput> | PostCreateWithoutUserInput[] | PostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PostCreateOrConnectWithoutUserInput | PostCreateOrConnectWithoutUserInput[]
@@ -7466,6 +8771,10 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type EnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -7598,6 +8907,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type ThemeCreateNestedOneWithoutPostsInput = {
+    create?: XOR<ThemeCreateWithoutPostsInput, ThemeUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: ThemeCreateOrConnectWithoutPostsInput
+    connect?: ThemeWhereUniqueInput
+  }
+
   export type PhotoCreateNestedManyWithoutPostInput = {
     create?: XOR<PhotoCreateWithoutPostInput, PhotoUncheckedCreateWithoutPostInput> | PhotoCreateWithoutPostInput[] | PhotoUncheckedCreateWithoutPostInput[]
     connectOrCreate?: PhotoCreateOrConnectWithoutPostInput | PhotoCreateOrConnectWithoutPostInput[]
@@ -7646,6 +8961,14 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutPostsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPostsInput, UserUpdateWithoutPostsInput>, UserUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type ThemeUpdateOneRequiredWithoutPostsNestedInput = {
+    create?: XOR<ThemeCreateWithoutPostsInput, ThemeUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: ThemeCreateOrConnectWithoutPostsInput
+    upsert?: ThemeUpsertWithoutPostsInput
+    connect?: ThemeWhereUniqueInput
+    update?: XOR<XOR<ThemeUpdateToOneWithWhereWithoutPostsInput, ThemeUpdateWithoutPostsInput>, ThemeUncheckedUpdateWithoutPostsInput>
   }
 
   export type PhotoUpdateManyWithoutPostNestedInput = {
@@ -7816,6 +9139,48 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommentsInput, UserUpdateWithoutCommentsInput>, UserUncheckedUpdateWithoutCommentsInput>
   }
 
+  export type PostCreateNestedManyWithoutThemeInput = {
+    create?: XOR<PostCreateWithoutThemeInput, PostUncheckedCreateWithoutThemeInput> | PostCreateWithoutThemeInput[] | PostUncheckedCreateWithoutThemeInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutThemeInput | PostCreateOrConnectWithoutThemeInput[]
+    createMany?: PostCreateManyThemeInputEnvelope
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+  }
+
+  export type PostUncheckedCreateNestedManyWithoutThemeInput = {
+    create?: XOR<PostCreateWithoutThemeInput, PostUncheckedCreateWithoutThemeInput> | PostCreateWithoutThemeInput[] | PostUncheckedCreateWithoutThemeInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutThemeInput | PostCreateOrConnectWithoutThemeInput[]
+    createMany?: PostCreateManyThemeInputEnvelope
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+  }
+
+  export type PostUpdateManyWithoutThemeNestedInput = {
+    create?: XOR<PostCreateWithoutThemeInput, PostUncheckedCreateWithoutThemeInput> | PostCreateWithoutThemeInput[] | PostUncheckedCreateWithoutThemeInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutThemeInput | PostCreateOrConnectWithoutThemeInput[]
+    upsert?: PostUpsertWithWhereUniqueWithoutThemeInput | PostUpsertWithWhereUniqueWithoutThemeInput[]
+    createMany?: PostCreateManyThemeInputEnvelope
+    set?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    disconnect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    delete?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    update?: PostUpdateWithWhereUniqueWithoutThemeInput | PostUpdateWithWhereUniqueWithoutThemeInput[]
+    updateMany?: PostUpdateManyWithWhereWithoutThemeInput | PostUpdateManyWithWhereWithoutThemeInput[]
+    deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
+  }
+
+  export type PostUncheckedUpdateManyWithoutThemeNestedInput = {
+    create?: XOR<PostCreateWithoutThemeInput, PostUncheckedCreateWithoutThemeInput> | PostCreateWithoutThemeInput[] | PostUncheckedCreateWithoutThemeInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutThemeInput | PostCreateOrConnectWithoutThemeInput[]
+    upsert?: PostUpsertWithWhereUniqueWithoutThemeInput | PostUpsertWithWhereUniqueWithoutThemeInput[]
+    createMany?: PostCreateManyThemeInputEnvelope
+    set?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    disconnect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    delete?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    update?: PostUpdateWithWhereUniqueWithoutThemeInput | PostUpdateWithWhereUniqueWithoutThemeInput[]
+    updateMany?: PostUpdateManyWithWhereWithoutThemeInput | PostUpdateManyWithWhereWithoutThemeInput[]
+    deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -7840,6 +9205,13 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     search?: string
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -7898,6 +9270,16 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -7916,6 +9298,7 @@ export namespace Prisma {
     title: string
     content: string
     createdAt?: Date | string
+    theme: ThemeCreateNestedOneWithoutPostsInput
     photos?: PhotoCreateNestedManyWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
     comments?: CommentCreateNestedManyWithoutPostInput
@@ -7925,6 +9308,7 @@ export namespace Prisma {
     id?: number
     title: string
     content: string
+    themeId: number
     createdAt?: Date | string
     photos?: PhotoUncheckedCreateNestedManyWithoutPostInput
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
@@ -8032,6 +9416,7 @@ export namespace Prisma {
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
     userId?: IntFilter<"Post"> | number
+    themeId?: IntFilter<"Post"> | number
     createdAt?: DateTimeFilter<"Post"> | Date | string
   }
 
@@ -8119,6 +9504,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
     photos?: PhotoCreateNestedManyWithoutUserInput
     likes?: LikeCreateNestedManyWithoutUserInput
@@ -8130,6 +9516,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
     photos?: PhotoUncheckedCreateNestedManyWithoutUserInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -8139,6 +9526,20 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutPostsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
+  }
+
+  export type ThemeCreateWithoutPostsInput = {
+    name: string
+  }
+
+  export type ThemeUncheckedCreateWithoutPostsInput = {
+    id?: number
+    name: string
+  }
+
+  export type ThemeCreateOrConnectWithoutPostsInput = {
+    where: ThemeWhereUniqueInput
+    create: XOR<ThemeCreateWithoutPostsInput, ThemeUncheckedCreateWithoutPostsInput>
   }
 
   export type PhotoCreateWithoutPostInput = {
@@ -8223,6 +9624,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     photos?: PhotoUpdateManyWithoutUserNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
@@ -8234,10 +9636,31 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     photos?: PhotoUncheckedUpdateManyWithoutUserNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ThemeUpsertWithoutPostsInput = {
+    update: XOR<ThemeUpdateWithoutPostsInput, ThemeUncheckedUpdateWithoutPostsInput>
+    create: XOR<ThemeCreateWithoutPostsInput, ThemeUncheckedCreateWithoutPostsInput>
+    where?: ThemeWhereInput
+  }
+
+  export type ThemeUpdateToOneWithWhereWithoutPostsInput = {
+    where?: ThemeWhereInput
+    data: XOR<ThemeUpdateWithoutPostsInput, ThemeUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type ThemeUpdateWithoutPostsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ThemeUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
   }
 
   export type PhotoUpsertWithWhereUniqueWithoutPostInput = {
@@ -8293,6 +9716,7 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutPostsInput
+    theme: ThemeCreateNestedOneWithoutPostsInput
     likes?: LikeCreateNestedManyWithoutPostInput
     comments?: CommentCreateNestedManyWithoutPostInput
   }
@@ -8302,6 +9726,7 @@ export namespace Prisma {
     title: string
     content: string
     userId: number
+    themeId: number
     createdAt?: Date | string
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
@@ -8316,6 +9741,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     likes?: LikeCreateNestedManyWithoutUserInput
@@ -8327,6 +9753,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -8354,6 +9781,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    theme?: ThemeUpdateOneRequiredWithoutPostsNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
     comments?: CommentUpdateManyWithoutPostNestedInput
   }
@@ -8363,6 +9791,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    themeId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
@@ -8383,6 +9812,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
@@ -8394,6 +9824,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -8404,6 +9835,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     photos?: PhotoCreateNestedManyWithoutUserInput
@@ -8415,6 +9847,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     photos?: PhotoUncheckedCreateNestedManyWithoutUserInput
@@ -8431,6 +9864,7 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutPostsInput
+    theme: ThemeCreateNestedOneWithoutPostsInput
     photos?: PhotoCreateNestedManyWithoutPostInput
     comments?: CommentCreateNestedManyWithoutPostInput
   }
@@ -8440,6 +9874,7 @@ export namespace Prisma {
     title: string
     content: string
     userId: number
+    themeId: number
     createdAt?: Date | string
     photos?: PhotoUncheckedCreateNestedManyWithoutPostInput
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
@@ -8465,6 +9900,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     photos?: PhotoUpdateManyWithoutUserNestedInput
@@ -8476,6 +9912,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     photos?: PhotoUncheckedUpdateManyWithoutUserNestedInput
@@ -8498,6 +9935,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    theme?: ThemeUpdateOneRequiredWithoutPostsNestedInput
     photos?: PhotoUpdateManyWithoutPostNestedInput
     comments?: CommentUpdateManyWithoutPostNestedInput
   }
@@ -8507,6 +9945,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    themeId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     photos?: PhotoUncheckedUpdateManyWithoutPostNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
@@ -8517,6 +9956,7 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutPostsInput
+    theme: ThemeCreateNestedOneWithoutPostsInput
     photos?: PhotoCreateNestedManyWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
   }
@@ -8526,6 +9966,7 @@ export namespace Prisma {
     title: string
     content: string
     userId: number
+    themeId: number
     createdAt?: Date | string
     photos?: PhotoUncheckedCreateNestedManyWithoutPostInput
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
@@ -8540,6 +9981,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
     photos?: PhotoCreateNestedManyWithoutUserInput
@@ -8551,6 +9993,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
+    role?: $Enums.Role
     createdAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     photos?: PhotoUncheckedCreateNestedManyWithoutUserInput
@@ -8578,6 +10021,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    theme?: ThemeUpdateOneRequiredWithoutPostsNestedInput
     photos?: PhotoUpdateManyWithoutPostNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
   }
@@ -8587,6 +10031,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    themeId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     photos?: PhotoUncheckedUpdateManyWithoutPostNestedInput
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
@@ -8607,6 +10052,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
     photos?: PhotoUpdateManyWithoutUserNestedInput
@@ -8618,16 +10064,65 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     photos?: PhotoUncheckedUpdateManyWithoutUserNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type PostCreateWithoutThemeInput = {
+    title: string
+    content: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutPostsInput
+    photos?: PhotoCreateNestedManyWithoutPostInput
+    likes?: LikeCreateNestedManyWithoutPostInput
+    comments?: CommentCreateNestedManyWithoutPostInput
+  }
+
+  export type PostUncheckedCreateWithoutThemeInput = {
+    id?: number
+    title: string
+    content: string
+    userId: number
+    createdAt?: Date | string
+    photos?: PhotoUncheckedCreateNestedManyWithoutPostInput
+    likes?: LikeUncheckedCreateNestedManyWithoutPostInput
+    comments?: CommentUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type PostCreateOrConnectWithoutThemeInput = {
+    where: PostWhereUniqueInput
+    create: XOR<PostCreateWithoutThemeInput, PostUncheckedCreateWithoutThemeInput>
+  }
+
+  export type PostCreateManyThemeInputEnvelope = {
+    data: PostCreateManyThemeInput | PostCreateManyThemeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PostUpsertWithWhereUniqueWithoutThemeInput = {
+    where: PostWhereUniqueInput
+    update: XOR<PostUpdateWithoutThemeInput, PostUncheckedUpdateWithoutThemeInput>
+    create: XOR<PostCreateWithoutThemeInput, PostUncheckedCreateWithoutThemeInput>
+  }
+
+  export type PostUpdateWithWhereUniqueWithoutThemeInput = {
+    where: PostWhereUniqueInput
+    data: XOR<PostUpdateWithoutThemeInput, PostUncheckedUpdateWithoutThemeInput>
+  }
+
+  export type PostUpdateManyWithWhereWithoutThemeInput = {
+    where: PostScalarWhereInput
+    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutThemeInput>
+  }
+
   export type PostCreateManyUserInput = {
     id?: number
     title: string
     content: string
+    themeId: number
     createdAt?: Date | string
   }
 
@@ -8655,6 +10150,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    theme?: ThemeUpdateOneRequiredWithoutPostsNestedInput
     photos?: PhotoUpdateManyWithoutPostNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
     comments?: CommentUpdateManyWithoutPostNestedInput
@@ -8664,6 +10160,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    themeId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     photos?: PhotoUncheckedUpdateManyWithoutPostNestedInput
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
@@ -8674,6 +10171,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    themeId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -8806,6 +10304,43 @@ export namespace Prisma {
 
   export type CommentUncheckedUpdateManyWithoutPostInput = {
     id?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostCreateManyThemeInput = {
+    id?: number
+    title: string
+    content: string
+    userId: number
+    createdAt?: Date | string
+  }
+
+  export type PostUpdateWithoutThemeInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    photos?: PhotoUpdateManyWithoutPostNestedInput
+    likes?: LikeUpdateManyWithoutPostNestedInput
+    comments?: CommentUpdateManyWithoutPostNestedInput
+  }
+
+  export type PostUncheckedUpdateWithoutThemeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    photos?: PhotoUncheckedUpdateManyWithoutPostNestedInput
+    likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type PostUncheckedUpdateManyWithoutThemeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
