@@ -1,14 +1,14 @@
 "use client"
 
-import { joinForm } from "@/types/models/user";
+import {  joinForm,} from "@/types/models/user";
 import React, { useState } from "react";
 
 export default function JoinForm() {
 
     const [joinData, setJoinData] = useState<joinForm>({
         nickname: "",
-        password: "",
         email: "",
+        password: "",
     });
 
     const handleSubmit = async (e : React.FormEvent<HTMLFormElement>)=>{

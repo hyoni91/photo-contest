@@ -6,3 +6,7 @@ export interface joinForm{
     email : string; //hash
 }
 
+export interface loginForm{
+    email : string;
+    password : string;
+}

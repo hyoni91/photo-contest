@@ -1,17 +1,19 @@
+"use client"
 
-import React from "react";
+import { loginForm } from "@/types/models/user";
+import React, { useState } from "react";
 
 export default function LoginForm() {
 
-    const [loginData, setLoginData] = React.useState({
-        nickname: "",
-        password: ""
+    const [loginData, setLoginData] = useState<loginForm>({
+        password: "",
+        email:"",
     });
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await fetch("/api/users", {
+            const response = await fetch("/api/auth/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -42,6 +44,29 @@ export default function LoginForm() {
     return(
         <div>
             <h1>Login</h1>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="nickname">Email</label>
+                    <input
+                        type="text"
+                        id="email"
+                        name="email"
+                        value={loginData.email}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={loginData.password}
+                        onChange={handleChange}
+                    />
+                </div>
+                <button type="submit">Login</button>
+            </form>
         </div>
     )
 }
