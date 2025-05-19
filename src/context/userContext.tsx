@@ -1,7 +1,7 @@
 "use client";
 
 import { UserContextType } from "@/types/models/user";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 // UserContextType 정의
 export const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -9,6 +9,41 @@ export const UserContext = createContext<UserContextType | undefined>(undefined)
 // UserProvider 컴포넌트 정의
 export const UserProvider : React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [userId, setUserId] = useState<string | null>(null);
+
+    useEffect(()=>{
+        const fetchProfile = async () => {
+            const token = localStorage.getItem("token");
+            if(!token){
+                setUserId(null);
+                return;
+            }
+           
+            try{
+            const response = await fetch("/api/user/profile",{
+                method : "GET",
+                headers :{
+                    "Content-Type" : "application/json",
+                    "Authorization" : `Bearer ${token}`
+                }
+            })
+
+            if(response.ok){
+                const data = await response.json();
+                setUserId(data.userId);
+            }else {
+                console.warn("Failed to fetch profile");
+                setUserId(null);
+              }
+        }catch(err){
+            console.error("Error in fetchProfile", err);
+            setUserId(null);    
+        }
+    } 
+        fetchProfile();
+        
+        
+    },[])
+
     return (
         <UserContext.Provider value={{ userId, setUserId }}>
             {children}
