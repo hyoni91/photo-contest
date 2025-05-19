@@ -13,7 +13,7 @@ export default function LoginForm() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await fetch("/api/auth/users", {
+            const response = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -23,6 +23,7 @@ export default function LoginForm() {
             const data = await response.json();
             if (response.ok) {
                 alert("Login Success");
+                localStorage.setItem("token", data.token);
                 console.log("Login Success", data);
             } else {
                 alert("Login Fail");
