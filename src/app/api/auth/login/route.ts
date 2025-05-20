@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma';
-import { joinForm } from "@/types/models/user";
+import { loginForm } from "@/types/models/user";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -9,9 +9,9 @@ import jwt from "jsonwebtoken";
 export async function POST(req:Request) {
 
     try{
-        const {nickname, password} : joinForm = await req.json();
+        const {email, password} : loginForm = await req.json();
         
-        const user = await prisma.user.findUnique({where : {nickname}});
+        const user = await prisma.user.findUnique({where : {email}});
         if(!user){
             return NextResponse.json({
                 message : "nickname is required"
@@ -26,7 +26,10 @@ export async function POST(req:Request) {
         }
 
         const token = jwt.sign(
-            { userId : user.nickname },
+            { userId : user.id, 
+            nickname : user.nickname,
+            role : user.role,
+             },
             process.env.JWT_SECRET as string,
             { expiresIn : "1h" }
         )
