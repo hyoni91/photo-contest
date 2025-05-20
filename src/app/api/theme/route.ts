@@ -1,6 +1,6 @@
-import { ThemeInput } from "@/types/models/post";
 import prisma from '@/lib/prisma';
-import { verifyToken } from "../auth/middlewear";
+import { ThemeInput } from "@/types/models/post";
+import { verifyToken } from "../auth/middleware";
 
 export enum Role {
     ADMIN = "ADMIN",

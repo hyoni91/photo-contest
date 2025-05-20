@@ -1,5 +1,5 @@
-import { verifyToken } from "../../auth/middlewear";
 import prisma from '@/lib/prisma';
+import { verifyToken } from "../../auth/middleware";
 
 export async function GET(req :Request){
 
