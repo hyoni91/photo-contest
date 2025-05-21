@@ -1,11 +1,10 @@
-import { storage } from "@/lib/firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage"  // firebase storage 関数　import
-//ref: Firebase의 저장소 경로를 설정. 폴더 경로처럼 "images/myimage.jpg" 
-//uploadBytes: Firebase의 저장소에 파일을 업로드. 이 함수는 파일을 업로드하고, 업로드된 파일의 참조를 반환
-//getDownloadURL: Firebase의 저장소에 업로드된 파일의 다운로드 URL을 가져옵니다. 이 URL은 파일을 다운로드하거나 미리보기하는 데 사용
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
+import { storage } from "@/lib/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"  // firebase storage 関数
+//ref: 保存するパスを指定（例: "images/myphoto.jpg"）
+//uploadBytes: 指定した場所にファイルをアップロード
+//getDownloadURL: アップロードされたファイルのURLを取得（ダウンロードやプレビューに使用）
 
 
 export default function UploadPhoto() {
