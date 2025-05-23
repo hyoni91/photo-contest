@@ -11,12 +11,12 @@ export enum Role {
 export async function POST(req:Request){
     const decoded = verifyToken(req);
     if(!decoded){
-        return new Response("Unauthorized", {status : 401});
+        return new Response(JSON.stringify({ message: "Unauthorized" }), {status : 401});
     }
     //Roleの確認
     if(decoded.role !== Role.ADMIN){
         console.log("User is not admin");
-        return new Response("Unauthorized", {status : 401});
+        return new Response(JSON.stringify({ message: "Unauthorized" }), {status : 401});
     }
 
     try{
@@ -29,12 +29,12 @@ export async function POST(req:Request){
             where : {name : name}});
 
         if(existingTheme){
-            return new Response("Theme already exists", {status : 400});
+            return new Response(JSON.stringify({message : "Theme already exists"}), {status : 400});
         }
 
         //テーマ名が空文字の場合
         if(name === "" || name.trim() === ""){
-            return new Response("Theme name is required", {status : 400});
+            return new Response(JSON.stringify({message : "Theme name is required"}), {status : 400});
         }
 
     
@@ -42,14 +42,14 @@ export async function POST(req:Request){
             data : {name : name}}); 
 
         if(!theme){
-            return new Response("Theme not created", {status : 400});
+            return new Response(JSON.stringify({message:"Theme not created"}), {status : 400});
         }
         
-        return new Response("Theme created successfully", {status : 200});
+        return new Response(JSON.stringify({ message: "Theme created successfully" }), {status: 200,});
     }
     catch(err){
         console.error("Error in creating theme", err);
-        return new Response("Internal Server Error", {status : 500});
+        return new Response(JSON.stringify({message:"Internal Server Error"}), {status : 500});
     }
 }
 
@@ -61,6 +61,6 @@ export async function GET(req:Request){
     }
     catch(err){
         console.error("Error in getting theme", err);
-        return new Response("Internal Server Error", {status : 500});
+        return new Response(JSON.stringify({message:"Internal Server Error"}), {status : 500});
     }
 }
