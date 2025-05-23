@@ -3,14 +3,26 @@
 
 "use client";
 import { ThemeInput } from '@/types/models/post';
-import React, { useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 
 
 export default function ThemeForm() {
+    const [token, setToken] = useState<string | null>(null);
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("token");
+        if (!storedToken) {
+            alert("Please login first");
+            window.location.href = "/login";
+        } else {
+            setToken(storedToken);
+        }
+    }, []);
+
 
     const [themeName, setThemeName] = useState<ThemeInput>({
         name: "",
-    });
+    })    
 
     const handleSubmitTheme = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -18,7 +30,8 @@ export default function ThemeForm() {
             const response = await fetch("/api/theme", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`, 
                 },
                 body: JSON.stringify(themeName),
             });
@@ -27,6 +40,9 @@ export default function ThemeForm() {
             if (response.ok) {
                 alert("Theme created successfully");
                 console.log("Theme created successfully", data);
+                setThemeName({
+                    name: "",
+                });
             } else {
                 alert("Theme creation failed");
                 console.log("Theme creation failed", data);
