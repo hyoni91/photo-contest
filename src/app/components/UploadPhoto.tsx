@@ -13,6 +13,7 @@ export default function UploadPhoto() {
     const [url, setUrl] = useState("");
 
     const handleUpload = async()=>{
+      setUploading(true);
         if(!file) return alert("Please select a file");
        
         try{
@@ -22,6 +23,7 @@ export default function UploadPhoto() {
             const downloadURL = await getDownloadURL(snapshot.ref);
             setUrl(downloadURL);
             alert("File uploaded successfully");
+            setFile(null);
         }catch(error){
             console.error("Error uploading file:", error);
             alert("Error uploading file");
@@ -49,6 +51,12 @@ export default function UploadPhoto() {
             <div>
               <p>image:</p>
               <img src={url} alt="upload_img" />
+            </div>
+          )}
+          {file && (
+            <div>
+              <p>preview :</p>
+              <img src={URL.createObjectURL(file)} alt="preview_img" width={200} />
             </div>
           )}
         </div>
