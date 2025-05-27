@@ -6,7 +6,12 @@ import { v4 as uuidv4 } from "uuid";
 import { storage } from "@/lib/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"  // firebase storage 関数
 import React, { useState } from "react";
+//ref: 保存するパスを指定（例: "images/myphoto.jpg"）
+//uploadBytes: 指定した場所にファイルをアップロード
+//getDownloadURL: アップロードされたファイルのURLを取得（ダウンロードやプレビューに使用）
 
+//포스팅과 동시에 사진을 업로드하는 기능을 구현한 컴포넌트
+//다만 로그인기능을 파이어베이스로 구현해야함....
 export default function PostForm() {
 
     const userId = useUserContext().userId;
@@ -109,9 +114,6 @@ export default function PostForm() {
     };
 
    
-
-
-
     return(
         <div>
             
