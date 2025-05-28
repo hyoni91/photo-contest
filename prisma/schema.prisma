@@ -16,7 +16,7 @@ datasource db {
 model User {
   id         Int       @id @default(autoincrement())
   nickname   String
-  password   String
+  uid        String?   @unique   // Nullable로 먼저 추가
   email      String    @unique
   role       Role      @default(USER)
   createdAt  DateTime  @default(now())
@@ -25,6 +25,7 @@ model User {
   likes      Like[]
   comments   Comment[]
 }
+
 
 enum Role {
   ADMIN
