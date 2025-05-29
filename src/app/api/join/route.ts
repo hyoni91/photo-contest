@@ -1,22 +1,18 @@
 import prisma from '@/lib/prisma';
-import { joinForm } from "@/types/models/user";
+import { JoinRequestData } from "@/types/models/user";
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
 
 //Join
 export async function POST(req:Request) {
         try{
-    const {nickname, password , email} : joinForm = await req.json();
-    console.log("joinForm", nickname, password, email);
-
-    //password hashing
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const {nickname, uid , email} : JoinRequestData = await req.json();
+    console.log("joinForm", nickname, uid, email);
 
     const result = await prisma.user.create({
         data : {
             nickname,
-            password : hashedPassword,
             email,
+            uid
         }
     });
 
