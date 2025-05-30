@@ -48,8 +48,7 @@ export default function SigninForm() {
             if (response.ok) {
                 alert("Login Success");
                 console.log("Login Success", data);
-            }
-            else {
+            }else {
                 alert("Login Fail");
                 console.log("Login Fail", data);
             }
@@ -66,11 +65,11 @@ export default function SigninForm() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="email">メールアドレス</label>
-                    <input type="email" id="email" value={loginData.email} onChange={handleChange} />
+                    <input type="email" id="email" name="email" value={loginData.email} onChange={(e)=>handleChange(e)} />
                 </div>
                 <div>
                     <label htmlFor="password">パスワード</label>
-                    <input type="password" id="password" value={loginData.password} onChange={handleChange} />
+                    <input type="password" id="password" name="password" value={loginData.password} onChange={(e)=>handleChange(e)} />
                 </div>
                 <button type="submit">ログイン</button>
             </form>

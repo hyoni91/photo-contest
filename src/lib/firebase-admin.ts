@@ -1,15 +1,19 @@
 // IDトークンを検証
 
-import * as admin from 'firebase-admin';
+import { initializeApp, cert, getApps } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 
-if (!admin.apps.length) {
-    admin.initializeApp({
-      credential: admin.credential.cert({
-        projectId: process.env.FIREBASE_PROJECT_ID!,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
-      }),
-      // 필요하면 storageBucket도 추가 가능
-      // storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    });
-  }
+const adminConfig = {
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+  privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+};
+
+if (!getApps().length) {
+  initializeApp({
+    credential: cert(adminConfig),
+    // storageBucket: '프로젝트-id.appspot.com' // 필요 시 추가
+  });
+}
+
+export const adminAuth = getAuth(); // ID 토큰 검증용
