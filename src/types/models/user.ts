@@ -26,3 +26,8 @@ export interface loginForm{
     email : string;
     password : string;
 }
+
+export interface loginRequestData {
+    email: string;
+    uid : string;  // Firebase가 준 고유 ID
+}

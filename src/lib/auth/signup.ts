@@ -14,7 +14,7 @@ export async function signup(email: string, password: string){
         const user = userCredential.user;
         
         // ユーザーのメールアドレスやUIDなどを返す
-        //  必要に応じて、ユーザープロフィールの設定やデータベースへの保存などを行うことができます。
+        //  必要に応じて、ユーザープロフィールの設定やデータベースへの保存など可能
         return {
             email: user.email,
             uid: user.uid,

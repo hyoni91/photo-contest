@@ -1,9 +1,9 @@
 import React from "react";
-import JoinForm from "../components/JoinForm";
+import SignupForm from "../components/SignupForm";
 
 export default function JoinPage() {
 
     return(
-        <JoinForm />
+        <SignupForm />
     )
 }

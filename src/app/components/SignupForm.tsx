@@ -4,7 +4,6 @@ import { useState } from "react";
 import { signup} from "@/lib/auth/signup";
 import { joinForm } from "@/types/models/user";
 
-// PWはDBに保存しないので、DB修正必要
 
 export default function SignupForm() {
 
