@@ -9,7 +9,16 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className={styles.layout}>
       <header className={styles.header}>
-        Photo Contest
+        <nav className={styles.nav}>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+          <ul>
+            <li><a href="/login">Login</a></li>
+          </ul>
+        </nav>
       </header>
 
       <main className={styles.main}>
