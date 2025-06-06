@@ -39,6 +39,10 @@ export default function GalleryList() {
                 <img key={index} src={src} alt="" className={styles.thumb} />
               ))}
             </div>
+            <div className={styles.contestBtn}>
+                <button className={styles.btn}>참여하기</button>
+            </div>
+            
           </div>
         ))}
       </div>
