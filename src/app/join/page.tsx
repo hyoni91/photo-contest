@@ -1,9 +1,8 @@
-import React from "react";
-import JoinForm from "../components/JoinForm";
+import SignupForm from "../components/Auth/SignupForm";
 
 export default function JoinPage() {
 
     return(
-        <JoinForm />
+        <SignupForm />
     )
 }

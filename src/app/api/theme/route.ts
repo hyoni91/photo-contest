@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma';
-import { ThemeInput } from "@/types/models/post";
+import { Theme, ThemeInput } from "@/types/models/post";
 import { verifyToken } from "../auth/middleware";
 
 export enum Role {
@@ -56,7 +56,16 @@ export async function POST(req:Request){
 //テーマ取得
 export async function GET(req:Request){
     try{
-        const themes = await prisma.theme.findMany();
+        const themes:Theme[] = await prisma.theme.findMany({
+            include: {
+                posts: {
+                  include: {
+                    photos: true // 사진 테이블이 posts와 관계가 있으면
+                  }
+                }
+              }
+        }
+    );
         return new Response(JSON.stringify(themes), {status : 200, headers: {'Content-Type': 'application/json'}});
     }
     catch(err){

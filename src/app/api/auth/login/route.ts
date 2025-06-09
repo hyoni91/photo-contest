@@ -1,8 +1,9 @@
 import prisma from '@/lib/prisma';
 import { loginForm } from "@/types/models/user";
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+// import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
 
 
 //Login
@@ -18,12 +19,12 @@ export async function POST(req:Request) {
             }, {status : 400})
         }
 
-        const isValidPassword = await bcrypt.compare(password, user.password);
-        if(!isValidPassword){
-            return NextResponse.json({
-                message : "password is required"
-            }, {status : 400})
-        }
+        // const isValidPassword = await bcrypt.compare(password, user.password);
+        // if(!isValidPassword){
+        //     return NextResponse.json({
+        //         message : "password is required"
+        //     }, {status : 400})
+        // }
 
         const token = jwt.sign(
             { userId : user.id, 
