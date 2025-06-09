@@ -1,8 +1,10 @@
 "use client"
 
 import { useState } from "react";
-import { login } from "@/lib/auth/login";
 import { loginForm } from "@/types/models/user";
+import styles from "./SigninForm.module.scss";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 export default function SigninForm() {
 
@@ -26,21 +28,20 @@ export default function SigninForm() {
             if (!loginData.email || !loginData.password) {
                 return alert("メールアドレスとパスワードを入力してください。");
             }
-            const user = await login(loginData.email, loginData.password);
-            if (user) {
-                console.log("Login Success", user);
-            }
 
-            // サーバーにログインリクエストを送信
-            if (!user.token) {
-                return alert("トークンが取得できませんでした。ログインに失敗しました。");
-            }
+            const userCredential = await signInWithEmailAndPassword(auth, loginData.email, loginData.password); // ログイン
+            const firebaseUser = userCredential.user; // ユーザー情報を取得
+            const token = await firebaseUser.getIdToken(); // トークンを取得
+
+        
+            console.log("Login Success", firebaseUser);
+            
 
             const response = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${user.token}`, // トークンをヘッダーに追加
+                    Authorization: `Bearer ${token}`, // トークンをヘッダーに追加
 
                 },});
 
@@ -60,18 +61,18 @@ export default function SigninForm() {
     };
 
     return (
-        <div>
+        <div className={styles.container}>
             <h2>ログイン</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className={styles.formGroup}>
                     <label htmlFor="email">メールアドレス</label>
                     <input type="email" id="email" name="email" value={loginData.email} onChange={(e)=>handleChange(e)} />
                 </div>
-                <div>
+                <div className={styles.formGroup}>
                     <label htmlFor="password">パスワード</label>
                     <input type="password" id="password" name="password" value={loginData.password} onChange={(e)=>handleChange(e)} />
                 </div>
-                <button type="submit">ログイン</button>
+                <button type="submit" className={styles.submitButton}>ログイン</button>
             </form>
         </div>
     );

@@ -3,7 +3,7 @@
 import { useState } from "react";   
 import { signup} from "@/lib/auth/signup";
 import { joinForm } from "@/types/models/user";
-
+import styles from "./SigninForm.module.scss";
 
 export default function SignupForm() {
 
@@ -55,10 +55,10 @@ export default function SignupForm() {
 
 
     return(
-        <div>
+        <div className={styles.container}>
             <h2>アカウント作成</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className={styles.formGroup}>
                     <label htmlFor="nickname">ニックネーム</label>
                     <input
                         type="text"
@@ -69,7 +69,7 @@ export default function SignupForm() {
                         required
                     />
                 </div>
-                <div>
+                <div className={styles.formGroup}>
                     <label htmlFor="email">メールアドレス</label>
                     <input
                         type="email"
@@ -80,7 +80,7 @@ export default function SignupForm() {
                         required
                     />
                 </div>
-                <div>
+                <div className={styles.formGroup}>
                     <label htmlFor="password">パスワード</label>
                     <input
                         type="password"
@@ -91,7 +91,7 @@ export default function SignupForm() {
                         required
                     />
                 </div>
-                <button type="submit">アカウント作成</button>
+                <button type="submit" className={styles.submitButton}>アカウント作成</button>
             </form>
         </div>
     )

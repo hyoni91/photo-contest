@@ -3,17 +3,17 @@
   }
   
   .pageTitle {
-    font-size: 1rem;       /* 작게 변경 */
+    font-size: 1rem;       
     font-weight: 500;
     margin-bottom: 2rem;
     color: #444;
   }
   
   .cardGrid {
-    display: flex;           /* flex 세로 정렬 */
+    display: flex;           
     flex-direction: column;
-    gap: 2.5rem;             /* 간격 넉넉하게 */
-    align-items: center;     /* 카드 가운데 정렬 */
+    gap: 2.5rem;            
+    align-items: center;     
   }
   
   .card {
@@ -22,7 +22,7 @@
     border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: transform 0.2s;
-    max-width: 600px;        /* 최대 너비 지정 */
+    max-width: 600px;       
     width: 100%;
   }
   

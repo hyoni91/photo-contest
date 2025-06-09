@@ -16,3 +16,17 @@ export interface PostRequestBody {
     postId: number;
     userId: number;
   }
+
+  export interface Theme {
+    id: number;
+    name: string;
+    posts: Post[];
+  }
+
+  export interface Post {
+    id: number;
+    title: string;
+    content?: string;
+    photoUrl?: string;
+    userId?: number;
+  }
