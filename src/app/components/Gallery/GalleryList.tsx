@@ -28,7 +28,7 @@ export default function GalleryList() {
             <h2 className={styles.cardTitle}>{theme.name}</h2>
             <div className={styles.photoPreview}>
               {theme.posts.map((post) => (
-                <img key={post.id} src={'example.jpg'} alt="" className={styles.thumb} />
+                <img key={post.id} src={post.photoUrl} alt="" className={styles.thumb} />
               ))}
             </div>
             <div className={styles.contestBtn}>

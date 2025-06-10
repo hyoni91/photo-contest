@@ -50,14 +50,14 @@ model Post {
 
 model Photo {
   id         Int       @id @default(autoincrement())
-  filename   String
+  filename   String    @db.Text  // MySQL TEXT 타입으로 변경
   postId     Int
   userId     Int
   uploadedAt DateTime  @default(now())
   post       Post      @relation(fields: [postId], references: [id])
   user       User      @relation(fields: [userId], references: [id])
-
 }
+
 
 model Like {
   id         Int       @id @default(autoincrement())

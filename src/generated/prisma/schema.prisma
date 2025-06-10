@@ -48,7 +48,7 @@ model Post {
 
 model Photo {
   id         Int      @id @default(autoincrement())
-  filename   String
+  filename   String   @db.Text // MySQL TEXT 타입으로 변경
   postId     Int
   userId     Int
   uploadedAt DateTime @default(now())
