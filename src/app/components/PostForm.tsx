@@ -15,6 +15,9 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 export default function PostForm() {
 
     const [user, setUser] = useState<any>(null);
+    const [file, setFile] = useState<File | null>(null);
+    const [uploading, setUploading] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState("");
 
     const [postData, setPostData] = useState<PostRequestBody>({
         title: "",
@@ -22,18 +25,9 @@ export default function PostForm() {
         themeId: 0,
         photoUrl: "",
     })
-    
-    const [file, setFile] = useState<File | null>(null);
-    const [uploading, setUploading] = useState(false);
-    const [previewUrl, setPreviewUrl] = useState("");
-
-    const [photoData, setPhotoData] = useState<PhotoForm>({
-        filename: "",
-        postId: 0,
-        userId: Number() || 0, // ユーザーIDを設定
-    })
 
     useEffect(()=>{
+        //Firebaseからログインユーザー情報取得
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (firebaseUser)=>{
             if(firebaseUser){
@@ -66,7 +60,7 @@ export default function PostForm() {
             return alert("すべての項目を入力してください。");
         }
         
-        
+
         const idToken = await user.getIdToken();
         const uid = user.uid;
 
@@ -100,7 +94,6 @@ export default function PostForm() {
                 },
                 body: JSON.stringify({
                     ...newPostData,
-                    ...photoData
                 }),
             });
 
@@ -117,7 +110,6 @@ export default function PostForm() {
     
             // 4. 投稿フォームのリセット
             setPostData({ title: "", content: "", themeId: 0, photoUrl: "" });
-            setPhotoData({ filename: "", postId: 0, userId: uid });
             setFile(null);
             setPreviewUrl("");
         } catch (error) {
@@ -129,14 +121,7 @@ export default function PostForm() {
     };
 
 
-    const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setPhotoData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
+    
    
     return(
         <div>
