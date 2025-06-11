@@ -1,8 +1,6 @@
 import prisma from '@/lib/prisma';
 import { NextRequest } from "next/server";
-import { verifyToken } from "../../auth/middleware";
 import { PhotoForm, PostRequestBody } from '@/types/models/post';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { adminAuth } from '@/lib/firebase-admin';
 
 // post&photoテーブルにデータを追加するAPI
@@ -68,3 +66,4 @@ export async function POST(req: NextRequest) {
         return new Response("Internal Server Error", { status: 500 });
     }
 }
+
