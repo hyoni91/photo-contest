@@ -25,7 +25,7 @@ export default function ThemePhotoList({themeId}:Props){
 
     return(
         <div>
-
+            
         </div>
     )
 }

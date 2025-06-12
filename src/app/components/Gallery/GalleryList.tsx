@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./GalleryList.module.scss";
 import { Theme } from "@/types/models/post";
+import Link from "next/link";
  
 
 export default function GalleryList() {
@@ -19,6 +20,8 @@ export default function GalleryList() {
     fetchThemes();
   },[])
 
+    
+
   return (
     <div className={styles.container}>
       <h1 className={styles.pageTitle}>📷 テーマ一覧</h1>
@@ -32,7 +35,9 @@ export default function GalleryList() {
               ))}
             </div>
             <div className={styles.contestBtn}>
+              <Link href={`/themePhotos?themeId=${theme.id}`}>
                 <button className={styles.btn}>詳細へ</button>
+              </Link>
             </div>
             
           </div>
