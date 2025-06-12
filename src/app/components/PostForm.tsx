@@ -1,11 +1,11 @@
 //파일 작성 및 사진올리기(사진은 uploadPhoto.tsx에서)
 "use client";
-import { useUserContext } from "@/context/userContext";
 import { PhotoForm, PostRequestBody } from "@/types/models/post";
 import { v4 as uuidv4 } from "uuid";
 import { storage } from "@/lib/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"  // firebase storage 関数
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 //ref: 保存するパスを指定（例: "images/myphoto.jpg"）
 //uploadBytes: 指定した場所にファイルをアップロード
 //getDownloadURL: アップロードされたファイルのURLを取得（ダウンロードやプレビューに使用）
@@ -14,23 +14,32 @@ import React, { useState } from "react";
 //다만 로그인기능을 파이어베이스로 구현해야함....
 export default function PostForm() {
 
-    const userId = useUserContext().userId;
+    const [user, setUser] = useState<any>(null);
+    const [file, setFile] = useState<File | null>(null);
+    const [uploading, setUploading] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState("");
+
     const [postData, setPostData] = useState<PostRequestBody>({
         title: "",
         content: "",
         themeId: 0,
         photoUrl: "",
     })
-    
-    const [file, setFile] = useState<File | null>(null);
-    const [uploading, setUploading] = useState(false);
-    const [previewUrl, setPreviewUrl] = useState("");
 
-    const [photoData, setPhotoData] = useState<PhotoForm>({
-        filename: "",
-        postId: 0,
-        userId: Number(userId) || 0, // ユーザーIDを設定
-    })
+    useEffect(()=>{
+        //Firebaseからログインユーザー情報取得
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser)=>{
+            if(firebaseUser){
+                setUser(firebaseUser)
+            }else{
+                setUser(null)
+            }
+        })
+        return () => unsubscribe();
+
+    },[])
+
 
     const handlePostChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -42,12 +51,22 @@ export default function PostForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-    
+        
+        if(!user){
+            alert("please, login")
+            return;
+        }
         if (!postData.title || !postData.content || !postData.themeId || !file) {
             return alert("すべての項目を入力してください。");
         }
-    
+        
+
+        const idToken = await user.getIdToken();
+        const uid = user.uid;
+
         setUploading(true);
+
+        
     
         try {
             // 1. Firebase Storageにファイルをアップロード
@@ -64,24 +83,22 @@ export default function PostForm() {
                 ...postData,
                 photoUrl: downloadURL,
             };
-    
-            const newPhotoData = {
-                filename: uniqueFileName,
-                userId: Number(userId),
-                postId: 0, // postIdはサーバーからの応答で設定されるため、初期値は0
-            };
+
     
             // 3. APIにPOSTリクエストを送信-> postDataとphotoDataをまとめて送信
             const response = await fetch("/api/photo/post", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${idToken}`,
                 },
                 body: JSON.stringify({
                     ...newPostData,
-                    photo: newPhotoData,
                 }),
             });
+
+            console.log("photoUrl:", downloadURL);
+
     
             if (!response.ok) {
                 throw new Error("投稿に失敗しました。");
@@ -93,7 +110,6 @@ export default function PostForm() {
     
             // 4. 投稿フォームのリセット
             setPostData({ title: "", content: "", themeId: 0, photoUrl: "" });
-            setPhotoData({ filename: "", postId: 0, userId: Number(userId) });
             setFile(null);
             setPreviewUrl("");
         } catch (error) {
@@ -105,14 +121,7 @@ export default function PostForm() {
     };
 
 
-    const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setPhotoData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
+    
    
     return(
         <div>

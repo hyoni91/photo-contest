@@ -1,6 +1,6 @@
 
 import React from "react";
-import ThemeForm from "../components/Theme/ThemeForm";
+import ThemeForm from "../components/Admin/ThemeForm";
 
 export default function ThemePage() {
     return (
