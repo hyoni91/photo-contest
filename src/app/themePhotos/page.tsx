@@ -13,7 +13,6 @@ export default function ThemePhotosListPage() {
 
     return (
         <div>
-            <h1>Theme Photos</h1>
             <ThemePhotoList themeId={themeId} />
         </div>
     );
