@@ -30,3 +30,15 @@ export interface PostRequestBody {
     photoUrl?: string;
     userId?: number;
   }
+
+  export interface PhotosList{
+    id: number;
+    title: string;
+    photos: {
+      filename: string;
+      userId: number;
+      id: number;
+      postId: number;
+      uploadedAt: string;
+    }[]; 
+  }

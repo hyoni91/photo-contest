@@ -1,0 +1,72 @@
+.photoListWrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.intro {
+  padding: 24px;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  margin-bottom: 32px;
+  text-align: center;
+
+  .themeTitle {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .themeDescription {
+    font-size: 16px;
+    color: #666;
+  }
+}
+
+
+.photoList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.postWrap {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+}
+
+.postWrap:hover {
+  transform: translateY(-4px);
+}
+
+.imgWrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.postTitle {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 16px 4px;
+}
+
+.userId {
+  font-size: 12px;
+  color: #000000;
+  padding: 0 16px 12px;
+}
