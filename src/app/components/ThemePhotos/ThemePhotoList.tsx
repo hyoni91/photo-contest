@@ -42,7 +42,10 @@ export default function ThemePhotoList({themeId}:Props){
                         <img className={styles.img} src={photo.filename} alt={`Photo ${photo.id}`} key={photo.id} />
                     ))}
                     </div>
-                    <h3 className={styles.postTitle}>{post.title}</h3>
+                    <div className={styles.cardFooter}>
+                        <h3 className={styles.postTitle}>{post.title}</h3>
+                        <button className={styles.likeButton}>❤️</button>
+                    </div>
                 </div>
                 ))}
             </div>

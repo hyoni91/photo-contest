@@ -20,7 +20,7 @@ export interface PostRequestBody {
   export interface Theme {
     id: number;
     name: string;
-    posts: Post[];
+    posts: PhotosList[];
   }
 
   export interface Post {

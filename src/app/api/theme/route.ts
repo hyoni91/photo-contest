@@ -56,7 +56,7 @@ export async function POST(req:Request){
 //テーマ取得
 export async function GET(req:Request){
     try{
-        const themes:Theme[] = await prisma.theme.findMany({
+        const themes = await prisma.theme.findMany({
             include: {
                 posts: {
                   include: {
@@ -66,7 +66,20 @@ export async function GET(req:Request){
               }
         }
     );
-        return new Response(JSON.stringify(themes), {status : 200, headers: {'Content-Type': 'application/json'}});
+
+        // uploadedAt(Date) -> string
+        const themesWithStringDates: Theme[] = themes.map(theme => ({
+            ...theme,
+            posts: theme.posts.map(post => ({
+                ...post,
+                photos: post.photos.map(photo => ({
+                    ...photo,
+                    uploadedAt: photo.uploadedAt instanceof Date ? photo.uploadedAt.toISOString() : photo.uploadedAt
+                }))
+            }))
+        }));
+
+        return new Response(JSON.stringify(themesWithStringDates), {status : 200, headers: {'Content-Type': 'application/json'}});
     }
     catch(err){
         console.error("Error in getting theme", err);
